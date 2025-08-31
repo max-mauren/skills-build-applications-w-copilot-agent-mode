@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-3f4qsj=%!x)c5r1gs2fw$wvpk!zncu=wjgbew41p+yiwyh!#qp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME', '')
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    f'{CODESPACE_NAME}-8000.app.github.dev' if CODESPACE_NAME else '*',
+]
 
 
 # Application definition
@@ -42,6 +48,9 @@ INSTALLED_APPS = [
     'djongo',
     'corsheaders',
 ]
+
+# Use custom user model
+AUTH_USER_MODEL = 'octofit_tracker.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
